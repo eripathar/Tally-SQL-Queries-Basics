@@ -1,22 +1,20 @@
-## 1. Lets begin with an example:
-
-An SQL query(prompt), followed by the response(table).
+## 1. Lets begin with an example of a  SQL query(~prompt):
 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger
 ```
-
+Expected response(table):
 
 | $Name               | $Parent          | $PartyGSTIN       | $ClosingBalance |
 |---------------------|------------------|-------------------|-----------------|
-| Nimbus Retail Pvt Ltd | Sundry Debtors   | 27AACCN4356P1Z4   | 2,14,750.00     |
+| Nimbus Retail Pvt Ltd | Sundry Debtors  | 27AACCN4356P1Z4   | 2,14,750.00     |
 | Kaveri Agro Mart    | Sundry Debtors    | 33AABFK7685R1Z1   | 18,960.00       |
 | BlueLeaf Stationery | Sundry Debtors    | 07ABCPD1234L1Z7   | 920.00          |
 | Shree Metal Works   | Sundry Creditors  | 29AAGFS8821B1Z9   | 31,487.20       |
 
 It show the  $Name, $Parent, $PartyGSTIN, $ClosingBalance (Columns) from the table Ledger. There are 250+ tables in tally.
 
-## 3. Simple Filters  -   ```WHERE```
+## 2. Basic Filter  -   ```WHERE```
 
 For filtering a specific value/datapoint in a column, we can use WHERE
 
@@ -30,7 +28,7 @@ SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger WHERE $Parent = 
 | Kaveri Agro Mart      | Sundry Debtors | 33AABFK7685R1Z1 | 18,960.00        |
 | BlueLeaf Stationery   | Sundry Debtors |                 | 920.00           |
 
-### Wildcard filter  -  ```LIKE```
+## 3. Wildcard filter  -  ```LIKE```
 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger WHERE $Parent LIKE '%Sundry%'
@@ -43,7 +41,7 @@ SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger WHERE $Parent LI
 | BlueLeaf Stationery   | Sundry Debtors   |                 | 920.00           |
 | Shree Metal Works     | Sundry Creditors | 29AAGFS8821B1Z9 | 31,487.20        |
 
-## 4. Null and Not Null
+## 4. Filtering blanks   -  ```Null``` and  ```Not Null```
 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger WHERE $PartyGSTIN IS NULL
@@ -64,18 +62,13 @@ SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger WHERE $PartyGSTI
 | Shree Metal Works     | Sundry Creditors | 29AAGFS8821B1Z9 | 31,487.20        |
 
 
-
-
-
-
-## 2. Filters
-### To only Ledgers with Debit Balances ($$IsDr)
+## 5. Filter - to Select only with Debit Values prefix   -  ```$$IsDr```  
 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger WHERE $$IsDr:$ClosingBalance
 ```
 
-| \$Name                | \$Parent       | \$PartyGSTIN    | \$ClosingBalance |
+| $Name                 | $Parent        | $PartyGSTIN     | $ClosingBalance  |
 | --------------------- | -------------- | --------------- | ---------------- |
 | Nimbus Retail Pvt Ltd | Sundry Debtors | 27AACCN4356P1Z4 | 2,14,750.00      |
 | Kaveri Agro Mart      | Sundry Debtors | 33AABFK7685R1Z1 | 18,960.00        |
@@ -84,9 +77,7 @@ SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger WHERE $$IsDr:$Cl
 *(for credit balances just use NOT $$IsCr)*
 
 
-
-WIP
-## 3. Simple sort (ORDER BY): 
+## 6. Sort   -  ```ORDER BY```
 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger ORDER BY $ClosingBalance
@@ -99,26 +90,127 @@ SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger ORDER BY $Closin
 | Kaveri Agro Mart      | Sundry Debtors   | 33AABFK7685R1Z1 | 18,960.00        |
 | Nimbus Retail Pvt Ltd | Sundry Debtors   | 27AACCN4356P1Z4 | 2,14,750.00      |
 
-By an ingenius design, tally will consider Credit as Positive values and Debit as negative values
-The above answer response is in descending order of closing balance, and the creditor at the first is positive value, debitors have negative value. 
+**By an ingenious design, tally will consider Credit as Positive values and Debit as negative values
+The above answer response is in descending order of closing balance, and the creditor at the first is positive value, debitors have negative value.** 
 
-To reverse the order, you can add DESC to the end
+To reverse the order, you can add  ```DESC```  to the end:
 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger ORDER BY $ClosingBalance DESC
 ```
 
-For more clarity, you can add Prefix ```$$AscrAmt:``` to show the values with correct symbols as stored in Tally.
+| \$Name                | \$Parent         | \$PartyGSTIN    | \$ClosingBalance |
+| --------------------- | ---------------- | --------------- | ---------------- |
+| Nimbus Retail Pvt Ltd | Sundry Debtors   | 27AACCN4356P1Z4 | 2,14,750.00      |
+| Shree Metal Works     | Sundry Creditors | 29AAGFS8821B1Z9 | 31,487.20        |
+| Kaveri Agro Mart      | Sundry Debtors   | 33AABFK7685R1Z1 | 18,960.00        |
+| BlueLeaf Stationery   | Sundry Debtors   |                 | 920.00           |
+
+
+## 7. Show (-)ve symbols debit values  -  ```$$AscrAmt:``` 
+
+For more clarity, you can add Prefix ```$$AscrAmt:``` to show the value with correct symbols as stored in Tally.
 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $$AscrAmt:$ClosingBalance FROM ledger ORDER BY $ClosingBalance DESC
 ```
 
+| \$Name                | \$Parent         | \$PartyGSTIN    | \$\$AscrAmt:\$ClosingBalance |
+| --------------------- | ---------------- | --------------- | ---------------------------- |
+| BlueLeaf Stationery   | Sundry Debtors   |                 | (-)920.00                    |
+| Kaveri Agro Mart      | Sundry Debtors   | 33AABFK7685R1Z1 | (-)18,960.00                 |
+| Nimbus Retail Pvt Ltd | Sundry Debtors   | 27AACCN4356P1Z4 | (-)2,14,750.00               |
+| Shree Metal Works     | Sundry Creditors | 29AAGFS8821B1Z9 | 31,487.20                    |
 
-### Top-N by balance
+
+*($$AsDrAmt: is possible but dont bother, and dont use NOT $$AscrAmt:)*
+
+
+
+## 8. Grouping (Like pivot)  -  ```GROUP BY```
 
 ```sql
-SELECT TOP 3 $Name, $ClosingBalance FROM ledger ORDER BY $ClosingBalance DESC
+
+SELECT $Parent, $ClosingBalance FROM ledger GROUP BY $Parent
+```
+
+| \$Parent         | $ClosingBalance |
+| ---------------- |--------------   |
+| Sundry Debtors   |     2,34,630.00 |
+| Sundry Creditors |       31,487.20 |
+
+
+## 9. Filtering by Range  -  ```BETWEEN``` and ```AND```
+
+```sql
+SELECT $Name, $Parent, $ClosingBalance FROM Ledger WHERE $ClosingBalance BETWEEN 10000 AND 20000
+```
+
+| \$Name           | \$Parent       | \$ClosingBalance |
+| ---------------- | -------------- | ---------------- |
+| Kaveri Agro Mart | Sundry Debtors | 18,960.00        |
+
+---
+
+## 10. Boolean Operators in   ```WHERE```
+
+You can also use comparison operators inside the `WHERE` clause.
+
+| Operator | Description              |
+| -------- | ------------------------ |
+| =        | Equal to                 |
+| !=       | Not equal to (also <>    |
+| >        | Greater than             |
+| <        | Less than                |
+| >=       | Greater than or equal to |
+| <=       | Less than or equal to    |
+
+---
+
+### Example: Greater Than   ```>```
+
+```sql
+SELECT $Name, $ClosingBalance FROM Ledger WHERE $ClosingBalance > 20000
+```
+
+| \$Name                | \$ClosingBalance |
+| --------------------- | ---------------- |
+| Nimbus Retail Pvt Ltd | 2,14,750.00      |
+| Shree Metal Works     | 31,487.20        |
+
+---
+
+### Example: Not Equal To   ```!=```
+
+```sql
+SELECT $Name, $ClosingBalance FROM Ledger WHERE $ClosingBalance != 920
+```
+
+| \$Name                | \$ClosingBalance |
+| --------------------- | ---------------- |
+| Nimbus Retail Pvt Ltd | 2,14,750.00      |
+| Kaveri Agro Mart      | 18,960.00        |
+| Shree Metal Works     | 31,487.20        |
+
+---
+### Example: Multiple boolean operators
+
+```sql
+SELECT $Name, $Parent, $ClosingBalance FROM Ledger  WHERE $ClosingBalance > 10000  AND $ClosingBalance < 20000  AND $Parent = "Sundry Debtors"
+```
+
+| \$Name           | \$Parent       | \$ClosingBalance |
+| ---------------- | -------------- | ---------------- |
+| Kaveri Agro Mart | Sundry Debtors | 18,960.00        |
+
+
+---
+
+## 11. Top 'n' items by value
+* this is very very experimental. inconsistent results. not mission ready.
+  
+```sql
+Select Top 3 $ClosingBalance from ledger
 ```
 
 | \$Name                | \$ClosingBalance |
@@ -127,21 +219,10 @@ SELECT TOP 3 $Name, $ClosingBalance FROM ledger ORDER BY $ClosingBalance DESC
 | Shree Metal Works     | 31,487.20        |
 | Kaveri Agro Mart      | 18,960.00        |
 
-### Grouping by parent (distinct parents)
-
-```sql
-SELECT $Parent FROM ledger GROUP BY $Parent
-```
-
-| \$Parent         |
-| ---------------- |
-| Sundry Debtors   |
-| Sundry Creditors |
-
 
 #FAQs, etc 
 
-1. The SQL specific keywords (SeLEcT, fRoM) used in clauses are not CaSe SenSitIVE.
+1. The SQL specific keywords (SELECT, FROM) used in clauses are not CaSe SenSitIVE.
 i.e. 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger
@@ -152,4 +233,9 @@ select $Name, $Parent, $PartyGSTIN, $ClosingBalance from ledger
 ```
 will give the same response. 
 
-2. The numerical values will return with commas, if you are using the data directly to any other pipeline line polars, keep that in mind.
+2. Ymmv. There were many instances same query works on one data and not on others. 
+
+### Notes for machines (pandas, etc):
+1. The negative symbol will be in parenthesis.
+2. The numerical values will return with commas.
+3. Date columns will return as YYYYMMdd.
