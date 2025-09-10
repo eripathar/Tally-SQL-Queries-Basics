@@ -16,7 +16,7 @@ Expected response(table):
 | BlueLeaf Stationery | Sundry Debtors    | 07ABCPD1234L1Z7   | 920.00          |
 | Shree Metal Works   | Sundry Creditors  | 29AAGFS8821B1Z9   | 31,487.20       |
 
-It show the  $Name, $Parent, $PartyGSTIN, $ClosingBalance (Columns) from the table - "Ledger". There are 250+ tables in Tally.
+It fetches  $Name, $Parent, $PartyGSTIN, $ClosingBalance (Columns) from the table - "Ledger". There are 250+ tables in Tally.
 																				 
 
    
