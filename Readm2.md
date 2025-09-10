@@ -113,7 +113,7 @@ SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger ORDER BY $Closin
 | Kaveri Agro Mart      | Sundry Debtors   | 33AABFK7685R1Z1 | 18,960.00        |
 | Nimbus Retail Pvt Ltd | Sundry Debtors   | 27AACCN4356P1Z4 | 2,14,750.00      |
 
-**By an ingenious design, tally will consider Credit as Positive values and Debit as negative values
+** By an ingenious design, tally will consider Credit as Positive values and Debit as negative values
 The above answer response is in ascending order - Credit (+ve) values first, then debit(-ve) values 
 
 To reverse the order, you can add  `DESC`  to the end:
@@ -249,7 +249,7 @@ SELECT $Name, $Parent, $ClosingBalance FROM Ledger  WHERE $ClosingBalance > 1000
 ---
 
 ## 11. Top 'n' items by value
-* this is very very experimental. inconsistent results. not mission ready.
+**this is very very experimental. inconsistent results. not mission ready.
   
 ```sql
 Select Top 3 $ClosingBalance from ledger
@@ -263,11 +263,10 @@ Select Top 3 $ClosingBalance from ledger
 
 
 
-#FAQs, etc 
+# FAQs, etc 
 
-* 1.**Ymmv.** Behaviour can vary across Tally versions, datasets and ODBC drivers. Keep example queries as a guide and test on your dataset. 
-
-* 2. The SQL specific keywords (SELECT, FROM) used in clauses are not CaSe SenSitIVE.
+1. **Ymmv.** Behaviour can vary across Tally versions, datasets and ODBC drivers. Keep example queries as a guide and test on your dataset.  
+2. The SQL specific keywords (SELECT, FROM) used in clauses are not CaSe SenSitIVE.
 
 
 ## Notes for machines (pandas, scripts, etc):
@@ -286,63 +285,4 @@ Select Top 3 $ClosingBalance from ledger
 																	 
    
 6. **Tally specifc semantics**
-
-   * Tally prefixes and functions like `$$IsDr:`, `$$IsCr`, `$$AscrAmt:`(not standard SQL). Handle them in post-processing (e.g., interpret `$$IsDr:$ClosingBalance` as a boolean indicator to filter debits, credits).
-
-									  
-																	 
-																	 
-
-																											
-																 
-																							 
-
-										  
-
-																																																																															
-																   
-  
-   
-		  
-   
-
-				  
-		   
-		   
-		   
-		   
-
-																																												 
-
-									
-
-																																																																																							 
-  
-   
-															
-   
- 
-   
-															
-   
-		
-
-							   
-
-							
-
-
-											  
-																	   
-		
-
-					  
-
-			
-	  
-																																									 
-																																						   
-	  
-		
-
-										  
+Tally prefixes and functions like `$$IsDr:`, `$$IsCr`, `$$AscrAmt:`(not standard SQL). Handle them in post-processing (e.g., interpret `$$IsDr:$ClosingBalance` as a boolean indicator to filter debits, credits).
