@@ -14,7 +14,7 @@ Expected response(table):
 
 It show the  $Name, $Parent, $PartyGSTIN, $ClosingBalance (Columns) from the table Ledger. There are 250+ tables in tally.
 
-## 2. Basic Filter  -   ```WHERE```
+## 2. Basic Filter  -   `WHERE`
 
 For filtering a specific value/datapoint in a column, we can use WHERE
 
