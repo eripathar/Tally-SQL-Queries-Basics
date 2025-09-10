@@ -2,13 +2,7 @@ README — Tally SQL / ODBC Query Examples
 
 A quick reference of common Tally SQL/ODBC query examples and behaviours for extracting ledger data (columns, filters, sorting, grouping). Use `Ctrl+N` to open the calc panel — there you can run or test queries interactively.
 
-## 1. Lets begin with an example:
-
-						   
-
-	  
-															   
-   
+## 1. Let's begin with an example:
 
 ```sql
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger
@@ -37,7 +31,7 @@ For filtering a specific value/datapoint in a column, we can use WHERE
 SELECT $Name, $Parent, $PartyGSTIN, $ClosingBalance FROM ledger WHERE $Parent = 'Sundry Debtors'
 ```
 
-| $Name                 | $Parent        | $PartyGSTIN     | $ClosingBalance |
+| $Name                 | $Parent        | $PartyGSTIN     | $ClosingBalance  |
 | --------------------- | -------------- | --------------- | ---------------- |
 | Nimbus Retail Pvt Ltd | Sundry Debtors | 27AACCN4356P1Z4 | 2,14,750.00      |
 | Kaveri Agro Mart      | Sundry Debtors | 33AABFK7685R1Z1 | 18,960.00        |
@@ -156,7 +150,6 @@ SELECT $Name, $Parent, $PartyGSTIN, $$AscrAmt:$ClosingBalance FROM ledger ORDER 
 ## 8. Grouping (pivot-like)  -  `GROUP BY`
 
 ```sql
-
 SELECT $Parent, $ClosingBalance FROM ledger GROUP BY $Parent
 ```
 
@@ -175,7 +168,7 @@ SELECT $Parent, $ClosingBalance FROM ledger GROUP BY $Parent
 SELECT $Name, $Parent, $ClosingBalance FROM Ledger WHERE $ClosingBalance BETWEEN 10000 AND 20000
 ```
 
-| \$Name           | \$Parent       | \$ClosingBalance |
+| $Name            | $Parent        | $ClosingBalance  |
 | ---------------- | -------------- | ---------------- |
 | Kaveri Agro Mart | Sundry Debtors | 18,960.00        |
 
@@ -205,7 +198,7 @@ SELECT $Name, $ClosingBalance FROM Ledger WHERE $ClosingBalance > 20000
    
 
 					
-| \$Name                | \$ClosingBalance |
+| $Name                 | $ClosingBalance  |
 | --------------------- | ---------------- |
 | Nimbus Retail Pvt Ltd | 2,14,750.00      |
 | Shree Metal Works     | 31,487.20        |
@@ -222,7 +215,7 @@ SELECT $Name, $ClosingBalance FROM Ledger WHERE $ClosingBalance > 20000
 SELECT $Name, $ClosingBalance FROM Ledger WHERE $ClosingBalance != 920
 ```
 
-| \$Name                | \$ClosingBalance |
+| $Name                 | $ClosingBalance  |
 | --------------------- | ---------------- |
 | Nimbus Retail Pvt Ltd | 2,14,750.00      |
 | Kaveri Agro Mart      | 18,960.00        |
@@ -238,7 +231,7 @@ SELECT $Name, $ClosingBalance FROM Ledger WHERE $ClosingBalance != 920
 SELECT $Name, $Parent, $ClosingBalance FROM Ledger  WHERE $ClosingBalance > 10000  AND $ClosingBalance < 20000  AND $Parent = "Sundry Debtors"
 ```
 
-| \$Name           | \$Parent       | \$ClosingBalance |
+| $Name            | $Parent        |  $ClosingBalance |
 | ---------------- | -------------- | ---------------- |
 | Kaveri Agro Mart | Sundry Debtors | 18,960.00        |
 
@@ -255,7 +248,7 @@ SELECT $Name, $Parent, $ClosingBalance FROM Ledger  WHERE $ClosingBalance > 1000
 Select Top 3 $ClosingBalance from ledger
 ```
 
-| \$Name                | \$ClosingBalance |
+|  $Name                |  $ClosingBalance |
 | --------------------- | ---------------- |
 | Nimbus Retail Pvt Ltd | 2,14,750.00      |
 | Shree Metal Works     | 31,487.20        |
@@ -284,5 +277,5 @@ Select Top 3 $ClosingBalance from ledger
 4. In Tally datasets, Credit values appear as positive and Debit as negative (Tally's stored sign/representation). So the numeric order might look reversed if you interpret sign differently — use `$$AscrAmt:` if you want the stored/annotated representation (see section 7)
 																	 
    
-6. **Tally specifc semantics**
+6. **Tally specific semantics**
 Tally prefixes and functions like `$$IsDr:`, `$$IsCr`, `$$AscrAmt:`(not standard SQL). Handle them in post-processing (e.g., interpret `$$IsDr:$ClosingBalance` as a boolean indicator to filter debits, credits).
