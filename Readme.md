@@ -1,4 +1,4 @@
-# README — Tally SQL / ODBC Query Examples
+README — Tally SQL / ODBC Query Examples
 
 A quick reference of common Tally SQL/ODBC query examples and behaviours for extracting ledger data (columns, filters, sorting, grouping). Use `Ctrl+N` to open the calc panel — there you can run or test queries interactively.
 
@@ -263,7 +263,7 @@ Select Top 3 $ClosingBalance from ledger
 
 
 
-# FAQs, etc 
+## FAQs, etc 
 
 1. **Ymmv.** Behaviour can vary across Tally versions, datasets and ODBC drivers. Keep example queries as a guide and test on your dataset.  
 2. The SQL specific keywords (SELECT, FROM) used in clauses are not CaSe SenSitIVE.
